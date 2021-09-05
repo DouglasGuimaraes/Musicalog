@@ -30,13 +30,13 @@ namespace XUnitTest
                 Title = "Album 1",
                 ArtistName = "Arist 1",
                 AlbumType = Models.Enum.AlbumType.CD,
-                Stock = 7
+                Stock = -1 // Invalid data, so we will receive an Unprocessable Entity but we can validate the header
             };
 
             var json = JsonConvert.SerializeObject(albumToCreate);
             var mediaType = "application/json";
             var data = new StringContent(json, Encoding.UTF8, mediaType);
-            var result = await _httpClient.PostAsync(_baseApiUrl, null);
+            var result = await _httpClient.PostAsync(_baseApiUrl, data);
             var endpointAssert = IsEndpointWorking(result);
             Assert.True(endpointAssert);
         }
@@ -48,9 +48,6 @@ namespace XUnitTest
             var result = await _httpClient.GetAsync(finalUrl);
             var endpointAssert = IsEndpointWorking(result);
             Assert.True(endpointAssert);
-
-            //Assert.True(result.IsSuccessStatusCode);
-            //Assert.Equal(System.Net.HttpStatusCode.OK, result.StatusCode);
         }
 
         [Fact]
@@ -62,20 +59,17 @@ namespace XUnitTest
                 Title = "Album 1 Updated",
                 ArtistName = "Arist 1 Updated",
                 AlbumType = Models.Enum.AlbumType.Vinyl,
-                Stock = 99
+                Stock = -1 // Invalid data, so we will receive an Unprocessable Entity but we can validate the header
             };
 
             string finalUrl = $"{_baseApiUrl}/{_albumId}";
             var json = JsonConvert.SerializeObject(albumToUpdate);
             var mediaType = "application/json";
             var data = new StringContent(json, Encoding.UTF8, mediaType);
-            var result = await _httpClient.PutAsync(finalUrl, null);
+            var result = await _httpClient.PutAsync(finalUrl, data);
 
             var endpointAssert = IsEndpointWorking(result);
             Assert.True(endpointAssert);
-
-            //Assert.True(result.IsSuccessStatusCode);
-            //Assert.Equal(System.Net.HttpStatusCode.OK, result.StatusCode);
         }
 
         [Fact]
@@ -85,11 +79,13 @@ namespace XUnitTest
             var result = await _httpClient.DeleteAsync(finalUrl);
             var endpointAssert = IsEndpointWorking(result);
             Assert.True(endpointAssert);
-
-            //Assert.True(result.IsSuccessStatusCode);
-            //Assert.Equal(System.Net.HttpStatusCode.NoContent, result.StatusCode);
         }
 
+        /// <summary>
+        /// Validate endpoints based on the Response Header: HealthCheckHeader_IsAlive
+        /// </summary>
+        /// <param name="httpResponseMessage"></param>
+        /// <returns></returns>
         private bool IsEndpointWorking(HttpResponseMessage httpResponseMessage)
         {
             var healthCheckHeader = httpResponseMessage.Headers.GetValues(_healthCheckHeader).ToList();
