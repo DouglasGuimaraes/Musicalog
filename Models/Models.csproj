@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Interfaces\" />
+    <None Remove="Entities\" />
+    <None Remove="Enu,\" />
+    <None Remove="Interfaces\Repository\" />
+    <None Remove="Interfaces\Service\" />
+    <None Remove="Interfaces\Service\Template\" />
+    <None Remove="Interfaces\Entities\" />
+    <None Remove="ViewModel\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Enum\" />
+    <Folder Include="Interfaces\Service\" />
+    <Folder Include="Interfaces\Service\Template\" />
+  </ItemGroup>
+</Project>

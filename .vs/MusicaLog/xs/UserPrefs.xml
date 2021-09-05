@@ -1,0 +1,51 @@
+﻿<Properties StartupConfiguration="{3E8B3721-DA8B-40E7-ABC0-6DC8E541B407}|Default">
+  <MonoDevelop.Ide.Workbench>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="MusicaLog" expanded="True">
+            <Node name="Core" expanded="True">
+              <Node name="WebAPI" expanded="True" />
+            </Node>
+            <Node name="Test" expanded="True">
+              <Node name="XUnitTest" expanded="True" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
+      </Pad>
+      <Pad Id="MonoDevelop.UnitTesting.TestPad">
+        <State name="__root__">
+          <Node name="MusicaLog" expanded="True">
+            <Node name="Test" expanded="True">
+              <Node name="XUnitTest" expanded="True">
+                <Node name="XUnitTest" expanded="True">
+                  <Node name="MuiscalogApiTest" expanded="True">
+                    <Node name="Test1_ShouldGetAlbumsFromApi" selected="True" />
+                  </Node>
+                </Node>
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.Core.WebAPI PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
+  <MonoDevelop.Ide.ItemProperties.Test.XUnitTest PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations>
+    <MultiItemSolutionRunConfiguration Id="Multiple Projects" Name="Multiple Projects">
+      <Items>
+        <StartupItem ItemId="{3E8B3721-DA8B-40E7-ABC0-6DC8E541B407}" ItemName="WebAPI" ConfigurationId="Default" />
+        <StartupItem ItemId="{A41E59E8-89DC-4014-9197-1F5777774F2C}" ItemName="XUnitTest" ConfigurationId="Default" />
+      </Items>
+    </MultiItemSolutionRunConfiguration>
+  </MultiItemStartupConfigurations>
+</Properties>
