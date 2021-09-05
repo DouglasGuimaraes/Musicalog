@@ -18,7 +18,7 @@ namespace WebAPI.Controllers
         }
 
         // GET: api/[controller]
-        [HttpGet()]
+        [HttpGet]
         public async Task<ActionResult<List<AlbumViewModel>>> GetByFilter(string title, string artistName)
         {
             base.SetResponseHeader();
@@ -26,11 +26,11 @@ namespace WebAPI.Controllers
             try
             {
                 var list = await _service.GetByFilter(title, artistName);
-                return list;
+                return Ok(list);
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
-                throw;
+                return Problem(detail: ex.Message, statusCode: 500);
             }
         }
 

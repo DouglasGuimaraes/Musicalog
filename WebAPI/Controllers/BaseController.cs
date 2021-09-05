@@ -22,16 +22,16 @@ namespace WebAPI.Controllers
         }
 
         // GET: api/[controller]
-        [HttpGet]
+        //[HttpGet]
         private async Task<ActionResult<IEnumerable<TEntity>>> Get()
         {
             SetResponseHeader();
-            return await _service.GetAll();
+            return Ok(await _service.GetAll());
         }
 
         // GET: api/[controller]/5
         [HttpGet("{id}")]
-        public virtual async Task<ActionResult<TEntity>> Get(int id)
+        public virtual async Task<ActionResult<TEntity>> GetById(int id)
         {
             SetResponseHeader();
 
@@ -41,11 +41,11 @@ namespace WebAPI.Controllers
                 if (entity == null)
                     return NotFound($"Data not found for id: {id}.");
 
-                return entity;
+                return Ok(entity);
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
-                throw;
+                return Problem(detail: ex.Message, statusCode: 500);
             }
         }
 
@@ -62,17 +62,17 @@ namespace WebAPI.Controllers
 
                 var album = await _service.Update(entity);
                 if (album == null)
-                    return UnprocessableEntity("Not expected information: AlbumType.");
+                    return UnprocessableEntity("Not expected information.");
 
-                return Ok(album);
+                return (album);
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
-                throw;
+                return Problem(detail: ex.Message, statusCode: 500);
             }
         }
 
-        // POST: api/[controller]
+        //// POST: api/[controller]
         [HttpPost]
         public virtual async Task<ActionResult<TEntity>> Post(TEntity entity)
         {
@@ -82,17 +82,17 @@ namespace WebAPI.Controllers
             {
                 var album = await _service.Add(entity);
                 if (album == null)
-                    return UnprocessableEntity("Not expected information: AlbumType.");
+                    return UnprocessableEntity("Not expected information.");
 
                 return CreatedAtAction("Get", new { id = album.Id }, album);
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
-                throw;
+                return Problem(detail: ex.Message, statusCode: 500);
             }
         }
 
-        // DELETE: api/[controller]/5
+        //// DELETE: api/[controller]/5
         [HttpDelete("{id}")]
         public virtual async Task<ActionResult<TEntity>> Delete(int id)
         {
@@ -107,13 +107,14 @@ namespace WebAPI.Controllers
                 }
                 return NoContent();
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
-                throw;
+                return Problem(detail: ex.Message, statusCode: 500);
             }
         }
 
-        public virtual void SetResponseHeader()
+        [NonAction]
+        protected virtual void SetResponseHeader()
         {
             HttpContext.Response.Headers.Add("HealthCheckHeader_IsAlive", "true");
         }

@@ -36,14 +36,9 @@ namespace XUnitTest
             var json = JsonConvert.SerializeObject(albumToCreate);
             var mediaType = "application/json";
             var data = new StringContent(json, Encoding.UTF8, mediaType);
-            var result = await _httpClient.PostAsync(_baseApiUrl, data);
+            var result = await _httpClient.PostAsync(_baseApiUrl, null);
             var endpointAssert = IsEndpointWorking(result);
             Assert.True(endpointAssert);
-
-            //Assert.True(result.IsSuccessStatusCode);
-            //Assert.Equal(System.Net.HttpStatusCode.Created, result.StatusCode);
-
-
         }
 
         [Fact]
@@ -74,7 +69,7 @@ namespace XUnitTest
             var json = JsonConvert.SerializeObject(albumToUpdate);
             var mediaType = "application/json";
             var data = new StringContent(json, Encoding.UTF8, mediaType);
-            var result = await _httpClient.PutAsync(finalUrl, data);
+            var result = await _httpClient.PutAsync(finalUrl, null);
 
             var endpointAssert = IsEndpointWorking(result);
             Assert.True(endpointAssert);

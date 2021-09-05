@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Models.Entities;
@@ -24,7 +25,7 @@ namespace Services
 
         public async Task<AlbumViewModel> Add(AlbumViewModel albumViewModel)
         {
-            if (IsValidAlbumType(albumViewModel.AlbumType))
+            if (IsValidAlbum(albumViewModel, isCreateAction: true))
             {
                 var entity = GetAlbumMapper(albumViewModel);
                 entity.SetLastUpdate();
@@ -65,8 +66,7 @@ namespace Services
 
         public async Task<AlbumViewModel> Update(AlbumViewModel albumViewModel)
         {
-
-            if (IsValidAlbumType(albumViewModel.AlbumType))
+            if (IsValidAlbum(albumViewModel))
             {
                 var toUpdateEntity = GetAlbumMapper(albumViewModel);
                 toUpdateEntity.SetLastUpdate();
@@ -80,13 +80,19 @@ namespace Services
 
         #region Private Methods
 
-        private bool IsValidAlbumType(AlbumType albumType)
+        private bool IsValidAlbum(AlbumViewModel album, bool isCreateAction = false)
         {
-            int albumTypeValue = (int)albumType;
-            if (albumTypeValue == 0 || albumTypeValue == 1)
-                return true;
-
-            return false;
+            bool isValidAlbumType = (int)album.AlbumType == 0 || (int)album.AlbumType == 1;
+            bool isValidTitle = !string.IsNullOrEmpty(album.Title);
+            bool isValidArtistName = !string.IsNullOrEmpty(album.ArtistName);
+            bool isValidStock = album.Stock >= 0;
+            bool albumDoesNotExists = true;
+            if(isCreateAction)
+            {
+                var albums = _albumRepository.GetByFilter(album.Title, album.ArtistName).Result;
+                albumDoesNotExists = !albums.Any();
+            }
+            return isValidAlbumType && isValidTitle && isValidArtistName && isValidStock && albumDoesNotExists;
         }
 
         private Album GetAlbumMapper(AlbumViewModel viewModel) 
